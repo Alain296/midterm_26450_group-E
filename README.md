@@ -222,24 +222,63 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 
 ---
 
-## 🚀 API Endpoints
+## 🚀 Comprehensive API Endpoints
 
-### 🔐 Users & Authentication
-- `POST   /api/users` - Register a new authentication profile
-- `GET    /api/users` - Return list of all system users
+### 🔐 UserController (`/api/users`)
+- `POST   /api/users` - Register a new system user
+- `POST   /api/users/save` - Alternative registration endpoint
+- `GET    /api/users` - Return complete list of users
 - `GET    /api/users/{id}` - Return targeted user data
-- `GET    /api/users/check/email/{email}` - Validate email existence optimally
-- `GET    /api/users/province/code/{code}` - Advanced tree search for all users inside a Province
+- `PUT    /api/users/{id}` - Update user data and security profile
+- `DELETE /api/users/{id}` - Remove a system user and cascade physical dependencies
+- `GET    /api/users/check/email/{email}` - Validate email existence optimally `existByEmail`
+- `GET    /api/users/check/username/{username}` - Validate username availability `existByUsername`
+- `GET    /api/users/province/code/{code}` - Advanced tree search for users globally inside a Province
+- `GET    /api/users/province/name/{provinceName}` - Search by explicit linguistic province wrapper
 
-### 👤 Customers
-- `POST   /api/customers` - Register physical consumer mapping
-- `GET    /api/customers/paged` - Fetches massive customer data strictly via native `Pageable` and `Sort` interfaces
-- `PUT    /api/customers/{id}` - Alter consumer details
+### 👤 CustomerController (`/api/customers`)
+- `POST   /api/customers` - Register physical consumer profile
+- `POST   /api/customers/save` - Execute physical generation mapped to User Profile
+- `GET    /api/customers` - Fetch broad un-paginated array
+- `GET    /api/customers/paged` - Heavily optimized explicit `Pageable` and `Sort` interface extraction
+- `GET    /api/customers/{id}` - Fetch explicit consumer profile
+- `PUT    /api/customers/{id}` - Update tracking metrics or location hierarchy
+- `DELETE /api/customers/{id}` - Wipe profile and usages completely
+- `GET    /api/customers/by-location-code/{code}` - Fetch by exact locale ID
+- `GET    /api/customers/by-province-name/{provinceName}` - Geographic macro extraction
+- `GET    /api/customers/by-sector-name/{sectorName}` - Mid-level structural extraction
+- `GET    /api/customers/by-village-name/{villageName}` - Micro-level localized extraction
+- `GET    /api/customers/check/email/{email}` - Validates existence constraints
+- `GET    /api/customers/check/phone/{phone}` - Validates unique phone existence
 
-### 📍 Locations
-- `POST   /api/locations/save` - Save a new geographic region (requires `parent_id` if smaller than Province)
-- `GET    /api/locations/hierarchy/{id}` - Fetch infinite child tree below a location
-- `GET    /api/locations/children/{parentId}` - Fetch direct descendants
+### 📍 LocationController (`/api/locations`)
+- `POST   /api/locations` - Map a raw new region
+- `POST   /api/locations/{parentId}/children` - Embed a direct geographic child explicitly
+- `GET    /api/locations` - Broad raw hierarchical extraction
+- `GET    /api/locations/{id}` - Node pinpoint
+- `PUT    /api/locations/{id}` - Adjust boundary designation
+- `DELETE /api/locations/{id}` - Disconnect boundaries
+- `GET    /api/locations/code/{code}` - Extract absolute path via standard code mappings
+- `GET    /api/locations/by-type/{type}` - Fetch all sectors, or all villages explicitly
+- `GET    /api/locations/provinces/{provinceId}/districts` - Drill-down spatial retrieval
+- `GET    /api/locations/districts/{districtId}/sectors` - Drill-down sub-zone isolation
+- `GET    /api/locations/sectors/{sectorId}/cells` - Terminal cell extraction
+- `GET    /api/locations/{parentId}/descendants` - Recursive deep-tree search of all attached children
+
+### 💧 BillController (`/api/bills`)
+- `POST   /api/bills` - Register static invoice
+- `POST   /api/bills/generate` - Abstract dynamic generation mapped via calculation algorithms
+- `GET    /api/bills` - Standard macro retrieval
+- `GET    /api/bills/paginated` - Low-memory block extraction for immense usage loads
+- `GET    /api/bills/sorted` - Sequence data by cost/timeline priority
+- `GET    /api/bills/customer/{customerId}` - Extract isolated historical mapping 
+- `GET    /api/bills/status/{status}` - Filter unpaid accounts across network
+- `DELETE /api/bills/{id}` - Erase invoice from ledger
+
+### 💳 Additional Core Controllers
+- **`PaymentController`** (`/api/payments`) - Facilitates robust CRUD integration recording historical transactions (MOMO, Bank, Cash) linked to Bill IDs.
+- **`WaterUsageController`** (`/api/water-usage`) - Handles CRUD generation arrays calculating previously checked static metrics against newly surveyed volumes mapped to users.
+- **`TariffRateController`** (`/api/tariffs`) - Exposes secured endpoints restricting usage-rate calculations strictly to authenticated Administrator profiles preventing revenue calculation conflicts.
 
 ---
 
