@@ -105,28 +105,34 @@ To develop a secure, scalable, and highly efficient digital utility backend that
 
 ---
 
-## 🌟 System Features
+---
 
-### 🔐 Authentication & Authorization
-- Robust User entity generation mapped securely to specific Roles
-- strict Many-To-Many Role mappings (Admin, Manager, Customer)
-- Complete separation of the authentication `User` from the physical `Customer` profile
+## 🏗️ Architectural Concept & Technical Implementations
 
-### 📍 Location-Based Features
-- Complete, dynamic Rwandan administrative hierarchy integration
-- True Self-Referencing structure: Province → District → Sector → Cell → Village
-- Deep-tree JPQL queries to fetch massive lists of customers aggregated by Province Code or Name
+The system's foundation is built upon a comprehensive relational database design, explicitly utilizing advanced Spring Data JPA concepts to ensure data integrity, performance, and scalability.
 
-### 💧 Usage & Billing Management
-- Intelligent tracking comparing prior meter readings to current readings to deduct consumed units
-- Automated transition of invoices through various financial states
-- Historical tracking of all payments against generated invoices
+### 1. Database Logic & Entity Relationships (ERD Mapping)
+The architecture consists of **8 interconnected tables**. The logic separates authentication (`users`, `roles`) from physical domain operations (`customers`, `locations`, `water_usages`, `bills`, `payments`, `tariff_rates`). 
 
-### 🔍 Advanced Query Features
-- **Full CRUD Operations:** Available for entirely all integrated entities
-- **Pagination Support:** Database-level extraction of thousands of rows into localized, small page outputs
-- **Flexible Sorting:** Sort any output by names, dates, or IDs dynamically
-- **Optimized existBy() Queries:** Highly efficient `SELECT 1` queries that validate emails and usernames without memory overhead
+- **One-to-One Relationship:** The `User` and `Customer` entities are connected via a strict `@OneToOne` mapping. This ensures that a single authentication profile is exclusively linked to one physical business identity. The `Customer` table holds the `user_id` foreign key, establishing a unidirectional dependency that prevents orphaned accounts during deletion limits.
+- **One-to-Many Connection:** We utilize `@OneToMany` mapping to bind a single `Customer` to multiple `WaterUsage` metrics and `Bills`. The logic relies on a `@JoinColumn` in the child tables (`customer_id`), allowing the application to fetch a customer's entire lifetime history of invoices sequentially.
+- **Many-to-Many Architecture:** `User` and `Role` entities are connected dynamically. Because users can have multiple roles (Admin, Manager) and roles can belong to multiple users, Spring Data JPA manages this using a dedicated **Join Table** named `user_roles`. This mapping uses `@ManyToMany` alongside `@JoinTable` to handle the bridging securely without duplicating data.
+
+### 2. Location Handling & Self-Referencing Logic
+Administrative locations (Province → District → Sector → Cell → Village) are dynamically mapped into a single `Location` table. 
+**How it is stored:** Instead of creating 5 redundant tables, the system uses a **Self-Referencing** `@ManyToOne` relationship. Every location record holds a `parent_id` foreign key pointing to another record in the exact same table. This allows the API to save a 'Village' and recursively trace its parent hierarchy all the way to the 'Province' seamlessly.
+
+### 3. High-Performance Querying (Pagination & Sorting)
+When dealing with massive utility networks, retrieving thousands of customers simultaneously causes fatal memory overhead and network latency.
+**Implementation:** We implemented Spring Data JPA's `PageRequest`, `Pageable`, and `Sort` interfaces. By passing a `Pageable` object to the Repository layer, the framework appends `LIMIT` and `OFFSET` clauses directly to the native PostgreSQL queries. This drastically improves performance because only the absolute minimum subset of data requested by the user is loaded into RAM at any given time.
+
+### 4. Optimized `existBy()` Usage
+Verifying if a username or email is already taken uses the `existsByUsername()` and `existsByEmail()` repository methods.
+**Explanation:** Rather than extracting entire `User` entities into memory just to see if they exist (which is highly inefficient), Spring Data JPA translates `existsBy` into a highly optimized database-level `SELECT 1 ... EXISTS` SQL query. It checks the index and drops the connection instantly, making registration and duplication checks lightning fast.
+
+### 5. Deep-Tree Data Extraction (Province Queries)
+To retrieve all customers residing dynamically within a specific Province, the system utilizes an overarching `@Query` logic within the Repository.
+**Method:** Since the system only links a customer directly to a 'Village', the custom JPQL method inherently traverses the `parent_id` foreign keys inside the `Location` table hierarchy upwards (*Customer → Village → Cell → Sector → District → Province*) via multiple database `JOIN`s, executing a powerful spatial aggregation to return localized users natively by province code or name.
 
 ---
 
