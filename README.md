@@ -249,3 +249,40 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 
 3. **Financial Modernization**
 ✅ Supports varied digital tracking (MoMo, Bank), moving rural communities towards cashless utility management and improving regional revenue collection. 
+
+---
+
+## 📸 API Testing & Verification
+
+<details>
+<summary><b>Click to expand System Screenshots & Rubric Validations</b></summary>
+
+### 👤 User & Role Management
+- <ins>User Alice Created</ins><br> <img src="screenshots/user_alice_created.png" width="800" />
+- <ins>New User Successfully Created</ins><br> <img src="screenshots/usercreated_successfully.png" width="800" />
+- <ins>Manager John Profile</ins><br> <img src="screenshots/managersaved_john_user.png" width="800" />
+- <ins>Optimized ExistBy Username Check (Req 7)</ins><br> <img src="screenshots/retrieving_using_username_for_existBy()_for_requirement7.png" width="800" />
+- <ins>Global User Roles (Req 4)</ins><br> <img src="screenshots/api_for_retrieving_all_user_roles.png" width="800" />
+- <ins>Generic Successful Creation</ins><br> <img src="screenshots/sucessfully_created.png" width="800" />
+
+### 📝 Customer & Profile Mapping
+- <ins>Alice Customer Linked to User</ins><br> <img src="screenshots/alice_customer_saved.png" width="800" />
+- <ins>Customer John Linkage</ins><br> <img src="screenshots/customer_john_saved.png" width="800" />
+- <ins>Basic Customer Creation Flow</ins><br> <img src="screenshots/create_customer.png" width="800" />
+- <ins>Customer Details Extraction</ins><br> <img src="screenshots/customercreated1.png" width="800" />
+- <ins>Explicit User-to-Customer One-to-One Validation (Req 6)</ins><br> <img src="screenshots/userlinked_to_customer.png" width="800" />
+- <ins>Extracting Customer by Precise ID</ins><br> <img src="screenshots/Retrieving_for_one_IDcustomer.png" width="800" />
+- <ins>Complete Global Customer List</ins><br> <img src="screenshots/retrieving_all_customer.png" width="800" />
+
+### 📍 Advanced Hierarchical Location & Pagination
+- <ins>Deep Searching Alice by Province Code (Req 8)</ins><br> <img src="screenshots/alice_retrieving_by_province_code.png" width="800" />
+- <ins>Retrieving Entire Customer Base by Province Name</ins><br> <img src="screenshots/retrieve_customer_by_province_name.png" width="800" />
+- <ins>Connected Authenticated Users mapped by Geo Code</ins><br> <img src="screenshots/retrieving_user_connected_to_customer_by_province_code.png" width="800" />
+- <ins>Dynamically Sorted Pageable Extractions (Req 3)</ins><br> <img src="screenshots/paginaton_requiremen_and_sorting.png" width="800" />
+
+</details>
+
+<br>
+<div align="center">
+  <i>Developed for Practical Assessment submission using cutting-edge Spring technologies.</i>
+</div> 
