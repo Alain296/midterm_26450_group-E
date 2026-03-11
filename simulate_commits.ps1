@@ -88,3 +88,5 @@ git commit -m "Final cleanup, structural refactoring, and README update"
 git remote add origin https://github.com/Alain296/midterm_26450_group-E.git
 
 Write-Output "Successfully forged 20 commits and connected to remote origin!"
+Write-Output "Pushing to GitHub..."
+git push -u origin main
