@@ -18,7 +18,6 @@
 | **Student ID** | 26450 |
 | **Group** | E |
 | **Course** | Web Technology |
-| **Academic Year**| 2024/2025 |
 | **Technology Stack** | Spring Boot, PostgreSQL, JPA/Hibernate, Maven |
 | **Project Type** | Backend Development (RESTful API) |
 
