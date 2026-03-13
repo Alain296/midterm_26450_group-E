@@ -302,34 +302,34 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 <summary><b>Click to expand System Screenshots & Rubric Validations</b></summary>
 
 ### 👤 User & Role Management
-- <ins>Saving User Alain Profile</ins><br> <img src="screenshots/Saving_User_alain.png" width="800" />
-- <ins>User Alice Created</ins><br> <img src="screenshots/user_alice_created.png" width="800" />
-- <ins>New User Successfully Created</ins><br> <img src="screenshots/usercreated_successfully.png" width="800" />
-- <ins>Manager John Profile</ins><br> <img src="screenshots/managersaved_john_user.png" width="800" />
-- <ins>Alain User Details Updated</ins><br> <img src="screenshots/Alain_User_updated.png" width="800" />
-- <ins>Retrieving Alain User by ID</ins><br> <img src="screenshots/Retrieving_Alain_User_By_ID.png" width="800" />
-- <ins>Complete Global User List</ins><br> <img src="screenshots/Retrieving_All_users.png" width="800" />
-- <ins>Optimized ExistBy Username Check (Req 7)</ins><br> <img src="screenshots/retrieving_using_username_for_existBy()_for_requirement7.png" width="800" />
-- <ins>Global User Roles (Req 4)</ins><br> <img src="screenshots/api_for_retrieving_all_user_roles.png" width="800" />
-- <ins>Generic Successful Creation</ins><br> <img src="screenshots/sucessfully_created.png" width="800" />
+- <ins>Saving User Alain Profile</ins><br> <img src="Postman Screenshot of Midterm/Saving_User_alain.png" width="800" />
+- <ins>User Alice Created</ins><br> <img src="Postman Screenshot of Midterm/user_alice_created.png" width="800" />
+- <ins>New User Successfully Created</ins><br> <img src="Postman Screenshot of Midterm/usercreated_successfully.png" width="800" />
+- <ins>Manager John Profile</ins><br> <img src="Postman Screenshot of Midterm/managersaved_john_user.png" width="800" />
+- <ins>Alain User Details Updated</ins><br> <img src="Postman Screenshot of Midterm/Alain_User_updated.png" width="800" />
+- <ins>Retrieving Alain User by ID</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_Alain_User_By_ID.png" width="800" />
+- <ins>Complete Global User List</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_All_users.png" width="800" />
+- <ins>Optimized ExistBy Username Check (Req 7)</ins><br> <img src="Postman Screenshot of Midterm/retrieving_using_username_for_existBy()_for_requirement7.png" width="800" />
+- <ins>Global User Roles (Req 4)</ins><br> <img src="Postman Screenshot of Midterm/api_for_retrieving_all_user_roles.png" width="800" />
+- <ins>Generic Successful Creation</ins><br> <img src="Postman Screenshot of Midterm/sucessfully_created.png" width="800" />
 
 ### 📝 Customer & Profile Mapping
-- <ins>Alice Customer Linked to User</ins><br> <img src="screenshots/alice_customer_saved.png" width="800" />
-- <ins>Customer John Linkage</ins><br> <img src="screenshots/customer_john_saved.png" width="800" />
-- <ins>Saving Customer Didace successfully</ins><br> <img src="screenshots/Saved_Didace_successfully.png" width="800" />
-- <ins>Basic Customer Creation Flow</ins><br> <img src="screenshots/create_customer.png" width="800" />
-- <ins>Customer Details Extraction</ins><br> <img src="screenshots/customercreated1.png" width="800" />
-- <ins>Updated Customer Didace Successfully</ins><br> <img src="screenshots/Updated_customer_Didace_Successfully.png" width="800" />
-- <ins>Explicit User-to-Customer One-to-One Validation (Req 6)</ins><br> <img src="screenshots/userlinked_to_customer.png" width="800" />
-- <ins>Extracting Customer by Precise ID</ins><br> <img src="screenshots/Retrieving_for_one_IDcustomer.png" width="800" />
-- <ins>Deleted Didace Customer successfully</ins><br> <img src="screenshots/Deleted_Didace_Customer_successfully.png" width="800" />
-- <ins>Complete Global Customer List</ins><br> <img src="screenshots/retrieving_all_customer.png" width="800" />
+- <ins>Alice Customer Linked to User</ins><br> <img src="Postman Screenshot of Midterm/alice_customer_saved.png" width="800" />
+- <ins>Customer John Linkage</ins><br> <img src="Postman Screenshot of Midterm/customer_john_saved.png" width="800" />
+- <ins>Saving Customer Didace successfully</ins><br> <img src="Postman Screenshot of Midterm/Saved_Didace_successfully.png" width="800" />
+- <ins>Basic Customer Creation Flow</ins><br> <img src="Postman Screenshot of Midterm/create_customer.png" width="800" />
+- <ins>Customer Details Extraction</ins><br> <img src="Postman Screenshot of Midterm/customercreated1.png" width="800" />
+- <ins>Updated Customer Didace Successfully</ins><br> <img src="Postman Screenshot of Midterm/Updated_customer_Didace_Successfully.png" width="800" />
+- <ins>Explicit User-to-Customer One-to-One Validation (Req 6)</ins><br> <img src="Postman Screenshot of Midterm/userlinked_to_customer.png" width="800" />
+- <ins>Extracting Customer by Precise ID</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_for_one_IDcustomer.png" width="800" />
+- <ins>Deleted Didace Customer successfully</ins><br> <img src="Postman Screenshot of Midterm/Deleted_Didace_Customer_successfully.png" width="800" />
+- <ins>Complete Global Customer List</ins><br> <img src="Postman Screenshot of Midterm/retrieving_all_customer.png" width="800" />
 
 ### 📍 Advanced Hierarchical Location & Pagination
-- <ins>Deep Searching Alice by Province Code (Req 8)</ins><br> <img src="screenshots/alice_retrieving_by_province_code.png" width="800" />
-- <ins>Retrieving Entire Customer Base by Province Name</ins><br> <img src="screenshots/retrieve_customer_by_province_name.png" width="800" />
-- <ins>Connected Authenticated Users mapped by Geo Code</ins><br> <img src="screenshots/retrieving_user_connected_to_customer_by_province_code.png" width="800" />
-- <ins>Dynamically Sorted Pageable Extractions (Req 3)</ins><br> <img src="screenshots/paginaton_requiremen_and_sorting.png" width="800" />
+- <ins>Deep Searching Alice by Province Code (Req 8)</ins><br> <img src="Postman Screenshot of Midterm/alice_retrieving_by_province_code.png" width="800" />
+- <ins>Retrieving Entire Customer Base by Province Name</ins><br> <img src="Postman Screenshot of Midterm/retrieve_customer_by_province_name.png" width="800" />
+- <ins>Connected Authenticated Users mapped by Geo Code</ins><br> <img src="Postman Screenshot of Midterm/retrieving_user_connected_to_customer_by_province_code.png" width="800" />
+- <ins>Dynamically Sorted Pageable Extractions (Req 3)</ins><br> <img src="Postman Screenshot of Midterm/paginaton_requiremen_and_sorting.png" width="800" />
 
 </details>
 
