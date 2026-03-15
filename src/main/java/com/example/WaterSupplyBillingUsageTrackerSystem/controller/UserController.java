@@ -2,6 +2,7 @@ package com.example.WaterSupplyBillingUsageTrackerSystem.controller;
 
 import com.example.WaterSupplyBillingUsageTrackerSystem.domain.User;
 import com.example.WaterSupplyBillingUsageTrackerSystem.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,17 +48,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        try {
-            userService.saveUser(user);
-            return ResponseEntity.ok("User saved successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error: " + e.getMessage() + " | Caused by: " + (e.getCause() != null ? e.getCause().getMessage() : "unknown"));
-        }
+    public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
+        userService.saveUser(user);
+        return ResponseEntity.ok("User saved successfully");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
         User updatedUser = userService.updateUser(id, user);
         if (updatedUser != null) {
             return ResponseEntity.ok("User updated successfully");

@@ -247,36 +247,4 @@ public class CustomerService {
         return getCustomersByLocationTypePageable(LocationType.VILLAGE, villageName, pageable);
     }
 
-    // ===== BACKWARD COMPATIBILITY METHODS (Legacy Province-Based) =====
-    
-    /**
-     * Retrieve all customers from a given province using province name
-     * Requirement: Retrieve users from a given province using province name
-     * DEPRECATED: Use getCustomersInProvince() or getCustomersByLocationType() instead
-     */
-    public List<Customer> getCustomersByProvinceName(String provinceName) {
-        return customerRepository.findCustomersByProvinceName(provinceName);
-    }
-
-    /**
-     * Retrieve all customers from a given province using province code
-     * Requirement: Retrieve users from a given province using province code
-     * DEPRECATED: Use getCustomersInProvince() or getCustomersByLocationType() instead
-     */
-    public List<Customer> getCustomersByProvinceCode(String provinceCode) {
-        return customerRepository.findCustomersByProvinceCode(provinceCode);
-    }
-
-    /**
-     * Get customers from province with pagination
-     * Supports pagination + province filtering
-     * DEPRECATED: Use getCustomersInProvincePageable() instead
-     */
-    public Page<Customer> getCustomersByProvinceNamePageable(String provinceName, Pageable pageable) {
-        return customerRepository.findCustomersByProvinceNamePageable(provinceName, pageable);
-    }
-
-    public Page<Customer> getCustomersByProvinceCodePageable(String provinceCode, Pageable pageable) {
-        return customerRepository.findCustomersByProvinceCodePageable(provinceCode, pageable);
-    }
 }

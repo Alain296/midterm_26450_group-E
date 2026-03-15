@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,13 +90,9 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createPayment(@RequestBody Payment payment) {
-        try {
-            paymentService.savePayment(payment);
-            return ResponseEntity.ok("Payment saved successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<String> createPayment(@Valid @RequestBody Payment payment) {
+        paymentService.savePayment(payment);
+        return ResponseEntity.ok("Payment saved successfully");
     }
 
     @DeleteMapping("/{id}")

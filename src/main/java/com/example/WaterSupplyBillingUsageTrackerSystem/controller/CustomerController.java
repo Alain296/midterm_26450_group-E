@@ -3,6 +3,7 @@ package com.example.WaterSupplyBillingUsageTrackerSystem.controller;
 import com.example.WaterSupplyBillingUsageTrackerSystem.domain.Customer;
 import com.example.WaterSupplyBillingUsageTrackerSystem.domain.Location;
 import com.example.WaterSupplyBillingUsageTrackerSystem.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,23 +33,13 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    /**
-     * Get customers with pagination and sorting
-     * Requirement: Implementation of Sorting functionality AND Pagination
-     * Example: /api/customers/paged?page=0&size=5&sort=name,asc
-     */
-    @GetMapping("/paged")
-    public org.springframework.data.domain.Page<Customer> getCustomersPaged(org.springframework.data.domain.Pageable pageable) {
-        return customerService.getAllCustomers(pageable);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, Object>> getCustomerById(@PathVariable Long id) {
         Optional<Customer> customerOpt = customerService.getCustomerById(id);
         if (!customerOpt.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-
+        
         Customer customer = customerOpt.get();
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("status", "success");
@@ -57,7 +48,7 @@ public class CustomerController {
         response.put("name", customer.getName());
         response.put("email", customer.getEmail());
         response.put("phone", customer.getPhone());
-
+        
         if (customer.getLocation() != null) {
             Location loc = customer.getLocation();
             Map<String, Object> locationMap = new LinkedHashMap<>();
@@ -67,7 +58,7 @@ public class CustomerController {
             locationMap.put("code", loc.getCode());
             locationMap.put("country", loc.getCountry());
             response.put("location", locationMap);
-
+            
             // Add full location hierarchy path
             List<Map<String, String>> path = new ArrayList<>();
             Location current = loc;
@@ -81,12 +72,12 @@ public class CustomerController {
             }
             response.put("locationHierarchy", path);
         }
-
+        
         return ResponseEntity.ok(response);
     }
 
     // ===== CODE-BASED LOCATION QUERIES =====
-
+    
     /**
      * Get customer(s) by exact location code
      * Example code: RW-KGL-GB-GSZ-MSZ-GV (Gasave village)
@@ -97,12 +88,12 @@ public class CustomerController {
         return customerService.getCustomersByLocationCode(code);
     }
 
+
+
     /**
      * Get all customers under a location hierarchy using code pattern
-     * Example: Code pattern "RW-KGL-GB-GSZ" returns all customers in villages under
-     * Gisozi sector
-     * Example: Code pattern "RW-KGL" returns all customers in villages under Kigali
-     * province
+     * Example: Code pattern "RW-KGL-GB-GSZ" returns all customers in villages under Gisozi sector
+     * Example: Code pattern "RW-KGL" returns all customers in villages under Kigali province
      * Usage: GET /api/customers/by-location-code-pattern/RW-KGL-GB-GSZ
      */
     @GetMapping("/by-location-code-pattern/{codePattern}")
@@ -110,17 +101,15 @@ public class CustomerController {
         return customerService.getCustomersByLocationCodePattern(codePattern);
     }
 
-    // ===== LOCATION TYPE-BASED QUERIES (Convenience Methods) =====
+
 
     /**
      * Get all customers in a province by name
-     * Returns simplified response with only id and name
      * Example: /api/customers/by-province-name/Kigali
      */
     @GetMapping("/by-province-name/{provinceName}")
     public ResponseEntity<List<Customer>> getCustomersInProvince(@PathVariable String provinceName) {
-        List<Customer> customers = customerService.getCustomersInProvince(provinceName);
-        return ResponseEntity.ok(customers);
+        return ResponseEntity.ok(customerService.getCustomersInProvince(provinceName));
     }
 
     /**
@@ -129,8 +118,7 @@ public class CustomerController {
      */
     @GetMapping("/by-sector-name/{sectorName}")
     public ResponseEntity<List<Customer>> getCustomersInSector(@PathVariable String sectorName) {
-        List<Customer> customers = customerService.getCustomersInSector(sectorName);
-        return ResponseEntity.ok(customers);
+        return ResponseEntity.ok(customerService.getCustomersInSector(sectorName));
     }
 
     /**
@@ -139,52 +127,26 @@ public class CustomerController {
      */
     @GetMapping("/by-village-name/{villageName}")
     public ResponseEntity<List<Customer>> getCustomersInVillage(@PathVariable String villageName) {
-        List<Customer> customers = customerService.getCustomersInVillage(villageName);
-        return ResponseEntity.ok(customers);
+        return ResponseEntity.ok(customerService.getCustomersInVillage(villageName));
     }
 
-    // ===== LEGACY PROVINCE-BASED QUERIES =====
-
-    /**
-     * Get customers by province name
-     * Example: /api/customers/by-province/name/Kigali
-     * DEPRECATED: Use /by-province-name instead
-     */
-    @GetMapping("/by-province/name/{provinceName}")
-    public ResponseEntity<List<Customer>> getCustomersByProvinceName(@PathVariable String provinceName) {
-        return ResponseEntity.ok(customerService.getCustomersByProvinceName(provinceName));
-    }
-
-    /**
-     * Get customers by province code
-     * Example: /api/customers/by-province/code/KGL
-     * DEPRECATED: Use /by-province-name instead
-     */
-    @GetMapping("/by-province/code/{provinceCode}")
-    public ResponseEntity<List<Customer>> getCustomersByProvinceCode(@PathVariable String provinceCode) {
-        return ResponseEntity.ok(customerService.getCustomersByProvinceCode(provinceCode));
-    }
 
     // ===== CRUD OPERATIONS =====
-
+    
     @PostMapping("/save")
-    public ResponseEntity<String> saveCustomerWithMessage(@RequestBody Customer customer) {
+    public ResponseEntity<String> saveCustomerWithMessage(@Valid @RequestBody Customer customer) {
         customerService.saveCustomer(customer);
         return ResponseEntity.ok("Customer saved successfully");
     }
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(@RequestBody Customer customer) {
-        try {
-            customerService.saveCustomer(customer);
-            return ResponseEntity.ok("Customer saved successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error: " + e.getMessage() + " | Caused by: " + (e.getCause() != null ? e.getCause().getMessage() : "unknown"));
-        }
+    public ResponseEntity<String> createCustomer(@Valid @RequestBody Customer customer) {
+        customerService.saveCustomer(customer);
+        return ResponseEntity.ok("Customer saved successfully");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+    public ResponseEntity<String> updateCustomer(@PathVariable Long id, @Valid @RequestBody Customer customer) {
         Customer updatedCustomer = customerService.updateCustomer(id, customer);
         if (updatedCustomer != null) {
             return ResponseEntity.ok("Customer updated successfully");
@@ -199,7 +161,7 @@ public class CustomerController {
     }
 
     // ===== EXISTENCE CHECKS =====
-
+    
     /**
      * Check if email already exists (existBy demonstration)
      */
@@ -216,3 +178,5 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.existsByPhone(phone));
     }
 }
+
+

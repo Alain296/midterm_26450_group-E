@@ -102,21 +102,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Query("SELECT l FROM Location l WHERE l.type = 'VILLAGE'")
     List<Location> getAllVillages();
 
-    // ===== BACKWARD COMPATIBILITY QUERIES =====
-
-    @Query("SELECT l FROM Location l WHERE l.type = 'PROVINCE' AND l.province = :province")
-    List<Location> findByProvince(@Param("province") String province);
-
-    @Query("SELECT l FROM Location l WHERE l.type = 'PROVINCE' AND l.provinceCode = :provinceCode")
-    List<Location> findByProvinceCode(@Param("provinceCode") String provinceCode);
-
-    Optional<Location> findByProvinceCodeIgnoreCase(String provinceCode);
-
-    Optional<Location> findByProvinceIgnoreCase(String province);
-
-    boolean existsByProvince(String province);
-
-    boolean existsByProvinceCode(String provinceCode);
 
     // ===== EXISTENCE CHECKS =====
 

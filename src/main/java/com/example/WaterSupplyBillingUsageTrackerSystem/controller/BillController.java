@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,13 +97,13 @@ public class BillController {
     }
 
     @PostMapping("/generate")
-    public ResponseEntity<String> generateBill(@RequestBody BillRequest request) {
-        Bill bill = billService.generateBill(request.getCustomer(), request.getUsage());
+    public ResponseEntity<String> generateBill(@Valid @RequestBody BillRequest request) {
+        billService.generateBill(request.getCustomer(), request.getUsage());
         return ResponseEntity.ok("Bill generated successfully");
     }
 
     @PostMapping
-    public ResponseEntity<String> createBill(@RequestBody Bill bill) {
+    public ResponseEntity<String> createBill(@Valid @RequestBody Bill bill) {
         Bill savedBill = billService.saveBill(bill);
         return ResponseEntity.ok("Bill saved successfully");
     }

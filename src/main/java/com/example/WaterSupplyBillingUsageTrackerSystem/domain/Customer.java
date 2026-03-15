@@ -1,6 +1,7 @@
 package com.example.WaterSupplyBillingUsageTrackerSystem.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDate;
 import java.util.List;
@@ -10,10 +11,18 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Customer name is required")
     private String name;
+
     @JsonIgnore
     private String address;
+
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^(07[2389])(\\d{7})$", message = "Invalid Rwandan phone number format")
     private String phone;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     @Column(nullable = false)
     private String email;
 

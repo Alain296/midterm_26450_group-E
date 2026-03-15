@@ -1,6 +1,7 @@
 package com.example.WaterSupplyBillingUsageTrackerSystem.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -13,8 +14,13 @@ public class Payment {
     @JoinColumn(name = "bill_id")
     private Bill bill;
 
+    @Min(value = 0, message = "Payment amount cannot be negative")
     private double amountPaid;
+    
+    @NotNull(message = "Payment date is required")
     private LocalDate paymentDate;
+    
+    @NotBlank(message = "Payment method is required")
     private String paymentMethod;
 
     public Long getId() { return id; }

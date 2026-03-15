@@ -1,6 +1,7 @@
 package com.example.WaterSupplyBillingUsageTrackerSystem.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -17,9 +18,15 @@ public class Bill {
     @JoinColumn(name = "usage_id")
     private WaterUsage usage;
 
+    @Min(value = 0, message = "Bill amount cannot be negative")
     private double amount;
+    
+    @NotBlank(message = "Bill status is required")
     private String status; // PAID/UNPAID
+    @NotNull(message = "Due date is required")
     private LocalDate dueDate;
+    
+    @NotNull(message = "Generated date is required")
     private LocalDate generatedDate;
 
     public Long getId() { return id; }

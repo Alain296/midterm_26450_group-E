@@ -1,6 +1,7 @@
 package com.example.WaterSupplyBillingUsageTrackerSystem.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
@@ -23,17 +24,14 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Basic location information (not needed in API responses)
-    @JsonIgnore
-    private String street;
-    @JsonIgnore
-    private String city;
 
     // Location identification
+    @NotBlank(message = "Location name is required")
     @Column(nullable = false)
     private String name; // e.g., "Kigali", "Gasabo", "Gisozi"
 
     // Hierarchical type - COUNTRY, PROVINCE, DISTRICT, SECTOR, CELL, VILLAGE
+    @NotNull(message = "Location type is required")
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private LocationType type;
@@ -46,16 +44,10 @@ public class Location {
     // RW-KGL-GB-GSZ (Rwanda-Kigali-Gasabo-Gisozi sector)
     // RW-KGL-GB-GSZ-MSZ (Rwanda-Kigali-Gasabo-Gisozi-MUSEZRO cell)
     // RW-KGL-GB-GSZ-MSZ-GV (Rwanda-Kigali-Gasabo-Gisozi-MUSEZRO-Gasave village)
+    @NotBlank(message = "Location code is required")
     @Column(unique = true, nullable = false)
     private String code;
 
-    // Backward compatibility fields (legacy data - not needed in API responses)
-    @JsonIgnore
-    private String province;
-    @JsonIgnore
-    private String provinceCode; // Legacy: e.g., "KGL" for Kigali
-    @JsonIgnore
-    private String postalCode;
 
     @Column(nullable = false)
     private String country; // "Rwanda"
@@ -96,17 +88,6 @@ public class Location {
         this.country = "Rwanda";
     }
 
-    // Legacy constructor for backward compatibility
-    public Location(String street, String city, String province, String provinceCode, String country,
-            String locationType) {
-        this.street = street;
-        this.city = city;
-        this.province = province;
-        this.provinceCode = provinceCode;
-        this.country = country;
-        this.name = province != null ? province : locationType;
-        // Note: For legacy data, manually set type and code
-    }
 
     // Getters and Setters
     public Long getId() {
@@ -117,21 +98,6 @@ public class Location {
         this.id = id;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public String getName() {
         return name;
@@ -157,29 +123,6 @@ public class Location {
         this.code = code;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getProvinceCode() {
-        return provinceCode;
-    }
-
-    public void setProvinceCode(String provinceCode) {
-        this.provinceCode = provinceCode;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
 
     public String getCountry() {
         return country;

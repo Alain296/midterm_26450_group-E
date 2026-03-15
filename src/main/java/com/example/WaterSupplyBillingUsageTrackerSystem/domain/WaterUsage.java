@@ -1,5 +1,6 @@
 package com.example.WaterSupplyBillingUsageTrackerSystem.domain;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -12,11 +13,23 @@ public class WaterUsage {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Min(value = 1, message = "Month must be between 1 and 12")
+    @Max(value = 12, message = "Month must be between 1 and 12")
     private int month;
+    
+    @Min(value = 2020, message = "Year must be 2020 or later")
     private int year;
+    
+    @Min(value = 0, message = "Previous reading cannot be negative")
     private double previousReading;
+    
+    @Min(value = 0, message = "Current reading cannot be negative")
     private double currentReading;
+    
+    @Min(value = 0, message = "Liters used cannot be negative")
     private double litersUsed;
+    
+    @NotNull(message = "Recorded date is required")
     private LocalDate recordedDate;
 
     public Long getId() { return id; }

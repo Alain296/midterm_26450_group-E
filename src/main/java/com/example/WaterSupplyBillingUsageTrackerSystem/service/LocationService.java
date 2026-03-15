@@ -213,33 +213,6 @@ public class LocationService {
                 .collect(Collectors.toList());
     }
 
-    // ===== BACKWARD COMPATIBILITY QUERIES =====
-    
-    public List<Location> getLocationsByProvinceName(String province) {
-        return locationRepository.findByProvince(province);
-    }
-
-    public List<Location> getLocationsByProvinceCode(String provinceCode) {
-        return locationRepository.findByProvinceCode(provinceCode);
-    }
-
-    public Optional<Location> getLocationByProvinceName(String province) {
-        return locationRepository.findByProvinceIgnoreCase(province);
-    }
-
-    public Optional<Location> getLocationByProvinceCode(String provinceCode) {
-        return locationRepository.findByProvinceCodeIgnoreCase(provinceCode);
-    }
-
-    // ===== EXISTENCE CHECKS =====
-    
-    public boolean provinceExists(String province) {
-        return locationRepository.existsByProvince(province);
-    }
-
-    public boolean provinceCodeExists(String provinceCode) {
-        return locationRepository.existsByProvinceCode(provinceCode);
-    }
 
     public boolean locationTypeExists(LocationType type) {
         return locationRepository.existsByType(type);

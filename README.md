@@ -108,9 +108,22 @@ To develop a secure, scalable, and highly efficient digital utility backend that
 
 ## 🏗️ Architectural Concept & Technical Implementations
 
-The system's foundation is built upon a comprehensive relational database design, explicitly utilizing advanced Spring Data JPA concepts to ensure data integrity, performance, and scalability.
+The system is built with a professional **Layered Architecture** and follows **Clean Code** principles, ensuring that validation and error handling are handled at the right level.
 
-### 1. Database Logic & Entity Relationships (ERD Mapping)
+### 1. Advanced Architecture & Error Handling
+- **Layered Structure:** Client → Controller → Service → Repository → Database.
+- **Global Exception Handling:** The project implements a `GlobalExceptionHandler` using `@RestControllerAdvice`. Instead of messy `try-catch` blocks in every controller, errors (like validation failures or system errors) are caught centrally and returned as professional, structured JSON.
+- **Simplified Domain Pattern:** While many systems use DTOs (Data Transfer Objects), this project utilizes a **Simplified Domain Pattern** for the Midterm. By exposing entities with selective `@JsonIgnore` annotations, we keep the codebase readable and easy to explain during the Viva-Voce while maintaining strict security.
+
+### 2. Professional Data Validation
+Every request sent to the API is strictly validated using **Jakarta Bean Validation**. This ensures that "Garbage In" never becomes "Garbage Out."
+- `@NotBlank`: Ensures mandatory strings (like names or emails) are not empty.
+- `@Email`: Automatically validates that email addresses follow the correct format.
+- `@Size`: Enforces minimum/maximum lengths for usernames and passwords.
+- `@Pattern`: Uses Regular Expressions (Regex) to validate Rwandan phone numbers (e.g., must start with `078`, `072`, etc.).
+- `@NotNull`: Prevents null values in critical relationship fields.
+
+### 3. Database Logic & Entity Relationships (ERD Mapping)
 The architecture consists of **8 interconnected tables**. The logic separates authentication (`users`, `roles`) from physical domain operations (`customers`, `locations`, `water_usages`, `bills`, `payments`, `tariff_rates`). 
 
 - **One-to-One Relationship:** The `User` and `Customer` entities are connected via a strict `@OneToOne` mapping. This ensures that a single authentication profile is exclusively linked to one physical business identity. The `Customer` table holds the `user_id` foreign key, establishing a unidirectional dependency that prevents orphaned accounts during deletion limits.
@@ -224,11 +237,11 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 ## 🚀 Comprehensive API Endpoints
 
 ### 🔐 UserController (`/api/users`)
-- `POST   /api/users` - Register a new system user
+- `POST   /api/users` - Register a new system user (with validation)
 - `POST   /api/users/save` - Alternative registration endpoint
 - `GET    /api/users` - Return complete list of users
 - `GET    /api/users/{id}` - Return targeted user data
-- `PUT    /api/users/{id}` - Update user data and security profile
+- `PUT    /api/users/{id}` - Update user data and security profile (with validation)
 - `DELETE /api/users/{id}` - Remove a system user and cascade physical dependencies
 - `GET    /api/users/check/email/{email}` - Validate email existence optimally `existByEmail`
 - `GET    /api/users/check/username/{username}` - Validate username availability `existByUsername`
@@ -236,17 +249,17 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 - `GET    /api/users/province/name/{provinceName}` - Search by explicit linguistic province wrapper
 
 ### 👤 CustomerController (`/api/customers`)
-- `POST   /api/customers` - Register physical consumer profile
+- `POST   /api/customers` - Register physical consumer profile (with validation)
 - `POST   /api/customers/save` - Execute physical generation mapped to User Profile
-- `GET    /api/customers` - Fetch broad un-paginated array
+- `GET    /api/customers` - Fetch broad customer list
 - `GET    /api/customers/paged` - Heavily optimized explicit `Pageable` and `Sort` interface extraction
 - `GET    /api/customers/{id}` - Fetch explicit consumer profile
-- `PUT    /api/customers/{id}` - Update tracking metrics or location hierarchy
+- `PUT    /api/customers/{id}` - Update profile or location (with validation)
 - `DELETE /api/customers/{id}` - Wipe profile and usages completely
 - `GET    /api/customers/by-location-code/{code}` - Fetch by exact locale ID
-- `GET    /api/customers/by-province-name/{provinceName}` - Geographic macro extraction
-- `GET    /api/customers/by-sector-name/{sectorName}` - Mid-level structural extraction
-- `GET    /api/customers/by-village-name/{villageName}` - Micro-level localized extraction
+- `GET    /api/customers/by-province-name/{provinceName}` - Geographic macro extraction (Returns List<Customer>)
+- `GET    /api/customers/by-sector-name/{sectorName}` - Mid-level structural extraction (Returns List<Customer>)
+- `GET    /api/customers/by-village-name/{villageName}` - Micro-level localized extraction (Returns List<Customer>)
 - `GET    /api/customers/check/email/{email}` - Validates existence constraints
 - `GET    /api/customers/check/phone/{phone}` - Validates unique phone existence
 

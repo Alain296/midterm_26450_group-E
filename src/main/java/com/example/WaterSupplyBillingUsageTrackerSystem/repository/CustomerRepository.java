@@ -114,29 +114,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "OR (l.parent.parent.parent.parent.parent IS NOT NULL AND l.parent.parent.parent.parent.parent.type = :type AND l.parent.parent.parent.parent.parent.name = :name)")
     Page<Customer> findCustomersByLocationTypePageable(@Param("type") LocationType type, @Param("name") String name, Pageable pageable);
     
-    // ===== BACKWARD COMPATIBILITY QUERIES (Legacy Province-Based) =====
-    
-    /**
-     * Retrieve customers from a given province using province name
-     * Uses a JOIN query to connect Customer -> Location -> Province name
-     * Supports Requirement: Retrieve users from a given province using province name
-     */
-    @Query("SELECT c FROM Customer c JOIN c.location l WHERE l.province = :provinceName")
-    List<Customer> findCustomersByProvinceName(@Param("provinceName") String provinceName);
-    
-    /**
-     * Retrieve customers from a given province using province code
-     * Supports Requirement: Retrieve users from a given province using province code
-     */
-    @Query("SELECT c FROM Customer c JOIN c.location l WHERE l.provinceCode = :provinceCode")
-    List<Customer> findCustomersByProvinceCode(@Param("provinceCode") String provinceCode);
-    
-    /**
-     * Paginated province search
-     */
-    @Query("SELECT c FROM Customer c JOIN c.location l WHERE l.province = :provinceName")
-    Page<Customer> findCustomersByProvinceNamePageable(@Param("provinceName") String provinceName, Pageable pageable);
-    
-    @Query("SELECT c FROM Customer c JOIN c.location l WHERE l.provinceCode = :provinceCode")
-    Page<Customer> findCustomersByProvinceCodePageable(@Param("provinceCode") String provinceCode, Pageable pageable);
 }

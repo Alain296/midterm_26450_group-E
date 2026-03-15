@@ -262,25 +262,4 @@ public class LocationController {
         return locationService.getAllVillagesUnder(parentId);
     }
 
-    // ===== BACKWARD COMPATIBILITY ENDPOINTS =====
-
-    @GetMapping("/province/name/{provinceName}")
-    public List<Location> getLocationsByProvinceName(@PathVariable String provinceName) {
-        return locationService.getLocationsByProvinceName(provinceName);
-    }
-
-    @GetMapping("/province/code/{provinceCode}")
-    public List<Location> getLocationsByProvinceCode(@PathVariable String provinceCode) {
-        return locationService.getLocationsByProvinceCode(provinceCode);
-    }
-
-    @GetMapping("/check/province/{provinceName}")
-    public ResponseEntity<Boolean> checkProvinceExists(@PathVariable String provinceName) {
-        return ResponseEntity.ok(locationService.provinceExists(provinceName));
-    }
-
-    @GetMapping("/check/code/{provinceCode}")
-    public ResponseEntity<Boolean> checkProvinceCodeExists(@PathVariable String provinceCode) {
-        return ResponseEntity.ok(locationService.provinceCodeExists(provinceCode));
-    }
 }
