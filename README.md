@@ -311,40 +311,158 @@ The database consists of 8 strictly typed, relational tables with deep hierarchi
 
 ## 📸 API Testing & Verification
 
-<details>
-<summary><b>Click to expand System Screenshots & Rubric Validations</b></summary>
-
 ### 👤 User & Role Management
-- <ins>Saving User Alain Profile</ins><br> <img src="Postman Screenshot of Midterm/Saving_User_alain.png" width="800" />
-- <ins>User Alice Created</ins><br> <img src="Postman Screenshot of Midterm/user_alice_created.png" width="800" />
-- <ins>New User Successfully Created</ins><br> <img src="Postman Screenshot of Midterm/usercreated_successfully.png" width="800" />
-- <ins>Manager John Profile</ins><br> <img src="Postman Screenshot of Midterm/managersaved_john_user.png" width="800" />
-- <ins>Alain User Details Updated</ins><br> <img src="Postman Screenshot of Midterm/Alain_User_updated.png" width="800" />
-- <ins>Retrieving Alain User by ID</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_Alain_User_By_ID.png" width="800" />
-- <ins>Complete Global User List</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_All_users.png" width="800" />
-- <ins>Optimized ExistBy Username Check (Req 7)</ins><br> <img src="Postman Screenshot of Midterm/retrieving_using_username_for_existBy()_for_requirement7.png" width="800" />
-- <ins>Global User Roles (Req 4)</ins><br> <img src="Postman Screenshot of Midterm/api_for_retrieving_all_user_roles.png" width="800" />
-- <ins>Generic Successful Creation</ins><br> <img src="Postman Screenshot of Midterm/sucessfully_created.png" width="800" />
+This section demonstrates the core authentication and authorization layer. The images show successful CRUD operations on user profiles, including hashing of sensitive data and dynamic role assignment through join tables.
+
+- <ins>Saving User Alain Profile</ins><br> 
+  ![Saving Alain](Postman Screenshot of Midterm/Saving_User_alain.png)
+  *   Demonstrates the `POST /api/users` endpoint for initial account registration.
+  *   Validates the system's ability to persist raw user data with unique username constraints.
+  *   Confirms the integration between the controller and service layers for basic object saving.
+
+- <ins>User Alice Created</ins><br> 
+  ![User Alice Created](Postman Screenshot of Midterm/user_alice_created.png)
+  *   Shows a secondary user creation to verify multi-tenant data isolation.
+  *   Confirms that the system correctly generates unique sequential IDs for new entries.
+  *   Validates the response structure returning the newly created object details.
+
+- <ins>New User Successfully Created</ins><br> 
+  ![User Created Successfully](Postman Screenshot of Midterm/usercreated_successfully.png)
+  *   Displays the success message response from the API after persistence.
+  *   Confirms the 200 OK status code and professional JSON success formatting.
+  *   Ensures that any server-side validation did not block valid incoming data.
+
+- <ins>Manager John Profile</ins><br> 
+  ![Manager John](Postman Screenshot of Midterm/managersaved_john_user.png)
+  *   Demonstrates the creation of a user with specific administrative roles.
+  *   Tests the `@ManyToMany` relationship by linking a user to the "MANAGER" role.
+  *   Validates that the system distinguish between different user types in the same table.
+
+- <ins>Alain User Details Updated</ins><br> 
+  ![Alain Updated](Postman Screenshot of Midterm/Alain_User_updated.png)
+  *   Tests the `PUT /api/users/{id}` endpoint for profile modifications.
+  *   Confirms that changes to fields (like phone or name) are properly flushed to the database.
+  *   Ensures that existing record IDs are maintained during partial or full updates.
+
+- <ins>Retrieving Alain User by ID</ins><br> 
+  ![Retrieving User](Postman Screenshot of Midterm/Retrieving_Alain_User_By_ID.png)
+  *   Validates the `GET /api/users/{id}` pinpoint retrieval functionality.
+  *   Confirms that the `@OneToOne` customer relationship is handled without circular reference errors.
+  *   Ensures that sensistive fields (like passwords) are hidden via `@JsonIgnore`.
+
+- <ins>Complete Global User List</ins><br> 
+  ![All Users](Postman Screenshot of Midterm/Retrieving_All_users.png)
+  *   Demonstrates the retrieval of the entire system user base in one request.
+  *   Tests the list-based response format for multiple JPA entity instances.
+  *   Provides evidence of the total system population across different roles.
+
+- <ins>Optimized ExistBy Username Check (Req 7)</ins><br> 
+  ![ExistBy Check](Postman Screenshot of Midterm/retrieving_using_username_for_existBy()_for_requirement7.png)
+  *   Directly fulfills **Requirement 7** by using the optimized `existsBy()` repository method.
+  *   Shows a boolean response indicating if a specific username is already taken.
+  *   Proves high-efficiency querying by checking database indexes instead of loading full objects.
+
+- <ins>Global User Roles (Req 4)</ins><br> 
+  ![User Roles](Postman Screenshot of Midterm/api_for_retrieving_all_user_roles.png)
+  *   Directly fulfills **Requirement 4** by demonstrating the Many-to-Many data structure.
+  *   Retrieves all defined roles (ADMIN, MANAGER, CUSTOMER) from the dedicated roles table.
+  *   Shows the bridge-table mapping logic that connects authorization levels to users.
+
+- <ins>Generic Successful Creation</ins><br> 
+  ![Generic Success](Postman Screenshot of Midterm/sucessfully_created.png)
+  *   A generic verification of the standardized "Success" response wrapper.
+  *   Ensures consistent UX across different API endpoints for creation operations.
+  *   Confirms the system returns human-readable feedback alongside machine-readable JSON.
 
 ### 📝 Customer & Profile Mapping
-- <ins>Alice Customer Linked to User</ins><br> <img src="Postman Screenshot of Midterm/alice_customer_saved.png" width="800" />
-- <ins>Customer John Linkage</ins><br> <img src="Postman Screenshot of Midterm/customer_john_saved.png" width="800" />
-- <ins>Saving Customer Didace successfully</ins><br> <img src="Postman Screenshot of Midterm/Saved_Didace_successfully.png" width="800" />
-- <ins>Basic Customer Creation Flow</ins><br> <img src="Postman Screenshot of Midterm/create_customer.png" width="800" />
-- <ins>Customer Details Extraction</ins><br> <img src="Postman Screenshot of Midterm/customercreated1.png" width="800" />
-- <ins>Updated Customer Didace Successfully</ins><br> <img src="Postman Screenshot of Midterm/Updated_customer_Didace_Successfully.png" width="800" />
-- <ins>Explicit User-to-Customer One-to-One Validation (Req 6)</ins><br> <img src="Postman Screenshot of Midterm/userlinked_to_customer.png" width="800" />
-- <ins>Extracting Customer by Precise ID</ins><br> <img src="Postman Screenshot of Midterm/Retrieving_for_one_IDcustomer.png" width="800" />
-- <ins>Deleted Didace Customer successfully</ins><br> <img src="Postman Screenshot of Midterm/Deleted_Didace_Customer_successfully.png" width="800" />
-- <ins>Complete Global Customer List</ins><br> <img src="Postman Screenshot of Midterm/retrieving_all_customer.png" width="800" />
+These screenshots focus on the business logic layer, linking physical consumers to their authentication accounts and geographical locations.
+
+- <ins>Alice Customer Linked to User</ins><br> 
+  ![Alice Customer](Postman Screenshot of Midterm/alice_customer_saved.png)
+  *   Validates the primary business registration process for a water consumer.
+  *   Confirms the `@OneToOne` association between a User entity and a Customer entity.
+  *   Ensures that the customer carries the necessary identification fields for billing.
+
+- <ins>Customer John Linkage</ins><br> 
+  ![Customer John](Postman Screenshot of Midterm/customer_john_saved.png)
+  *   Tests specialized linkage between a manager-type user and their customer profile.
+  *   Ensures that foreign key constraints between `users` and `customers` are strictly enforced.
+  *   Confirms that the database maintains integrity when one user is assigned unique customer data.
+
+- <ins>Saving Customer Didace successfully</ins><br> 
+  ![Didace Saved](Postman Screenshot of Midterm/Saved_Didace_successfully.png)
+  *   Another successful test of the customer persistence pipeline.
+  *   Validates that different customers can be linked to their respective villages accurately.
+  *   Ensures the service-layer logic for linking geographic locations is functioning.
+
+- <ins>Basic Customer Creation Flow</ins><br> 
+  ![Customer Creation](Postman Screenshot of Midterm/create_customer.png)
+  *   Displays the raw JSON payload used to initialize a new physical customer profile.
+  *   Tests the controller's ability to de-serialize complex nested objects into JPA entities.
+  *   Confirms that mandatory fields (name, email) are correctly required by the API.
+
+- <ins>Customer Details Extraction</ins><br> 
+  ![Customer Extraction](Postman Screenshot of Midterm/customercreated1.png)
+  *   Shows the detailed JSON output of a newly persisted customer record.
+  *   Includes location metadata which proves the Many-to-One geographic linkage.
+  *   Ensures that registration dates are automatically generated via `@PrePersist`.
+
+- <ins>Updated Customer Didace Successfully</ins><br> 
+  ![Customer Updated](Postman Screenshot of Midterm/Updated_customer_Didace_Successfully.png)
+  *   Verifies the `PUT` operation on the customer level for dynamic profile changes.
+  *   Tests the logic for updating contact information (phone/email) without breaking user links.
+  *   Ensures that only the specified fields are updated while preserving other history.
+
+- <ins>Explicit User-to-Customer One-to-One Validation (Req 6)</ins><br> 
+  ![One-to-One Validation](Postman Screenshot of Midterm/userlinked_to_customer.png)
+  *   Directly fulfills **Requirement 6** for One-to-One relationship implementation.
+  *   Proves that a single `Customer` record is uniquely mapped to exactly one `User` ID.
+  *   Ensures that no two customers can accidentally share the same authentication credentials.
+
+- <ins>Extracting Customer by Precise ID</ins><br> 
+  ![Customer By ID](Postman Screenshot of Midterm/Retrieving_for_one_IDcustomer.png)
+  *   Tests the primary retrieval method used for displaying a specific customer's dashboard.
+  *   Shows the full object graph including linked User and Location details.
+  *   Confirms that all lazy-loaded relationships are correctly fetched in the response.
+
+- <ins>Deleted Didace Customer successfully</ins><br> 
+  ![Customer Deleted](Postman Screenshot of Midterm/Deleted_Didace_Customer_successfully.png)
+  *   Tests the `DELETE` endpoint and examines the system's cascade behavior.
+  *   Confirms that deleting a customer correctly cleans up associated dependency records.
+  *   Ensures the system gracefully handles the removal of data without violating constraints.
+
+- <ins>Complete Global Customer List</ins><br> 
+  ![All Customers](Postman Screenshot of Midterm/retrieving_all_customer.png)
+  *   Displays the full registry of all water consumers across the utility network.
+  *   Provides an overview of the system's current database state and data variety.
+  *   Confirms that plural retrieval endpoints work with a collection of customer objects.
 
 ### 📍 Advanced Hierarchical Location & Pagination
-- <ins>Deep Searching Alice by Province Code (Req 8)</ins><br> <img src="Postman Screenshot of Midterm/alice_retrieving_by_province_code.png" width="800" />
-- <ins>Retrieving Entire Customer Base by Province Name</ins><br> <img src="Postman Screenshot of Midterm/retrieve_customer_by_province_name.png" width="800" />
-- <ins>Connected Authenticated Users mapped by Geo Code</ins><br> <img src="Postman Screenshot of Midterm/retrieving_user_connected_to_customer_by_province_code.png" width="800" />
-- <ins>Dynamically Sorted Pageable Extractions (Req 3)</ins><br> <img src="Postman Screenshot of Midterm/paginaton_requiremen_and_sorting.png" width="800" />
+This section showcases the most complex technical requirements, including the recursive Rwandan location hierarchy and localized data queries.
 
-</details>
+- <ins>Deep Searching Alice by Province Code (Req 8)</ins><br> 
+  ![Province Code Search](Postman Screenshot of Midterm/alice_retrieving_by_province_code.png)
+  *   Directly fulfills **Requirement 8** for province-based user retrieval.
+  *   Uses a hierarchical search to find users living in villages belonging to a specific province code.
+  *   Proves the system can traverse up the recursive location tree (Village -> Cell -> Province).
+
+- <ins>Retrieving Entire Customer Base by Province Name</ins><br> 
+  ![Province Name Search](Postman Screenshot of Midterm/retrieve_customer_by_province_name.png)
+  *   Demonstrates searching by linguistic location names rather than just machine codes.
+  *   Tests the JPQL join logic across multiple hierarchies to aggregate regional data.
+  *   Ensures data accessibility for non-technical users querying by common province names.
+
+- <ins>Connected Authenticated Users mapped by Geo Code</ins><br> 
+  ![Geo Code Search](Postman Screenshot of Midterm/retrieving_user_connected_to_customer_by_province_code.png)
+  *   Shows a specialized retrieval focusing on the authentication layer through a geographic filter.
+  *   Tests complex `@Query` logic that bridges User, Customer, and Location tables in one scan.
+  *   Provides evidence of advanced report-generation capability based on residency.
+
+- <ins>Dynamically Sorted Pageable Extractions (Req 3)</ins><br> 
+  ![Pagination & Sorting](Postman Screenshot of Midterm/paginaton_requiremen_and_sorting.png)
+  *   Directly fulfills **Requirement 3** for Pagination and Sorting implementation.
+  *   Demonstrates the API returning content in fixed pages (`size=5`) with sorting metadata.
+  *   Shows how the system handles large-scale data delivery without performance degradation.
 
 <br>
 <div align="center">
