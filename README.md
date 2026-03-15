@@ -125,6 +125,7 @@ Every request sent to the API is strictly validated using **Jakarta Bean Validat
 
 ### 3. Database Logic & Entity Relationships (ERD Mapping)
 The architecture consists of **8 interconnected tables**. The logic separates authentication (`users`, `roles`) from physical domain operations (`customers`, `locations`, `water_usages`, `bills`, `payments`, `tariff_rates`). 
+[image alt](https://github.com/Alain296/midterm_26450_group-E/blob/c41fafce4957fa3217152ac16c05d82094450715/Entity-Relationship%20Diagram.png)
 
 - **One-to-One Relationship:** The `User` and `Customer` entities are connected via a strict `@OneToOne` mapping. This ensures that a single authentication profile is exclusively linked to one physical business identity. The `Customer` table holds the `user_id` foreign key, establishing a unidirectional dependency that prevents orphaned accounts during deletion limits.
 - **One-to-Many Connection:** We utilize `@OneToMany` mapping to bind a single `Customer` to multiple `WaterUsage` metrics and `Bills`. The logic relies on a `@JoinColumn` in the child tables (`customer_id`), allowing the application to fetch a customer's entire lifetime history of invoices sequentially.
